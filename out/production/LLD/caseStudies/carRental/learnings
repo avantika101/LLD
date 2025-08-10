@@ -44,10 +44,4 @@ can return details of this user using userService
 > services like inventory etc can be pulled outside of the CarRentalService.
 While initializing CarRentalService, we can give those in the constructor of CarRentalService.
 
->> in current implementation, connection between vehicle and stall(& barcode) is missing.
-one implementation can be to have a list of stalls
-whenever creating a vehicle, list down all the stalls, choose one stall
-pass it in the constructor of the vehicle.
-when updating stall of the vehicle, add the existing stalls in the list of available stalls
-and then add the new one. Or assume that once a vehicle is assigned a stall, it cannot be changed.
-Assume things to be final if not mentioned else it will take time.
+Q>> where to instantiate small services like vehicle inventory, payments etc?

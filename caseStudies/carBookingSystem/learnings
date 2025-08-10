@@ -1,0 +1,53 @@
+Requirements - https://github.com/judeabii/CabBookingSystem_LLD?tab=readme-ov-file#cabbookingsystem_lld
+The Cab Booking System is a simple application designed to facilitate rider and cab management, and to provide location-based cab booking functionality. The system is built with a focus on adhering to the principles of Object-Oriented Design (OOD) and Low-Level Design (LLD).
+
+Features -
+> Rider Management
+Create and manage rider profiles.
+Update rider locations dynamically.
+> Cab Management
+Register and manage cabs with driver details and availability status.
+Update cab locations and availability status.
+> Trip Management
+Initiate and manage trips between riders and cabs.
+Track trip status from initiation to completion.
+> Location based cab booking
+Calculate distances between riders and cabs.
+Book the nearest available cab for a rider based on real-time location data.
+
+Requirements - http://github.com/anomaly2104/lld-cab-booking-ola-uber-grab-lyft
+> location is given as (x,y)
+> distance is euclidean
+> a maximum distance which driver can travel to pick a rider
+> 1 cab - 1 driver - 1 rider (no sharing)
+> only one type of cab
+> register a rider
+> register a driver/cab
+> driver can switch on/off availability ??
+> rider can book a cab
+> fetch history of rider.
+> end the trip.
+
+>>>>
+till now, we've seen two objects interacting with each other
+here, we have three objects interacting with each other
+cab has a driver & a trip includes a cab, driver and rider
+cab has a location also?
+
+>>>>
+If we have inventories, we can pass id instead of objects,
+call those inventories from their services and use services only.
+Not call models & inventories directly.
+
+>>>>
+Need to see how to code in such a way that we're able to complete all the code
+in given time.
+
+>>>>
+practice a lot to complete all code in 1 hour
+
+
+>>>>
+issues in current code
+1. maintaining availability status?
+2. updating trip location?

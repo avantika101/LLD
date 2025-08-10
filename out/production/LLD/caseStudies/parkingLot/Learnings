@@ -1,0 +1,122 @@
+vehicle
+parkingSpot
+ParkingFloor
+
+>> for each class' object, we can have one counter which will populate it's index.
+but index itself needs to be an instance variable so that it can be accessed for an object.
+static class variables are shared among objects of same class
+
+>> anything which creates objects via constructor & contains private final fields, requires only getters
+
+>> Single responsibility principle
+each class will have related to its own fields only
+
+>> check edge cases !
+
+>> divide the question into categories, identify the main.
+
+park / unpark vehicle
+generate ticket
+multiple entry and exit points
+- ticket generation can be done at entry gate only
+add payments
+- credit / cash
+- payment can be done at exit gate only
+add different categories for vehicles xxxxxxxxxxxxx
+add different types of spots for different vehicles
+- also add a panel which shows the number of available spots for each vehicle type
+EV vehicle parking spots also get feature to deduct fee via cc/dd
+add display panel
+add actors
+- admin & attendant
+- attendant can issue ticket & process payment
+- EV spot can also handle payment (already done)
+different payment strategies/calculations depending on
+- vehicle, spot, time
+
+>> another thing i am thinking of
+do how we do it in spring
+entities , repo , services , controllers
+for db tables, create entity classes
+
+>> whichever objects we provide to a class, it can use only them directly.
+it should not use it's internal methods directly.
+like, for releasing spot, exit gate should not call tc.getSpot().vacate()
+instead it should delegate it to parking lot where it gets its spot from.
+
+>>
+| Vehicle Type | Can Park In Spot Type(s) |
+| ------------ | ------------------------ |
+| `BIKE`       | `MOTORCYCLE`, `COMPACT`  |
+| `AUTO`       | `COMPACT`, `LARGE`       |
+| `CAR`        | `COMPACT`, `LARGE`       |
+
+>>
+when asked to introduce types of anything, introduce the enums first
+
+>>
+The Parking lot should have some parking spots specified for electric cars.
+These spots should have an electric panel through which customers can pay and charge
+their vehicles.
+- catch is that these spots have extra functionality which other spots dont have
+which is to be able to "pay" & "charge"
+- as long as all spots have same functionality, we can have one class
+but as different spots with different functionalities increase, complication increases
+- which pattern?
+- next problem is how to use the electric panel
+-- customer uses it, if it's available.
+so imagine a customer is parked at a spot
+spot has electric panel ? yes : no
+if yes : spot.getElectricPanel().payAndCharge() --- where will we place this code though?
+in application ? parkingLot? is it okay to get spot from ticket for this purpose?
+- how will customer interact with chraging service?
+
+> why create services for some, not for othres
+- when interacting with external hardware / software
+- beneficial to have a ticketService like below
+- if in a flow you have to call multiple methods of the same class,
+better to create a service for it
+
+
+class TicketService {
+    private final Map<String, Ticket> activeTickets = new HashMap<>();
+
+    public Ticket issueTicket(Vehicle vehicle, ParkingSpot spot) {
+        Ticket ticket = new Ticket(vehicle, spot);
+        activeTickets.put(ticket.getId(), ticket);
+        return ticket;
+    }
+
+    public Ticket getTicketById(String id) {
+        return activeTickets.get(id);
+    }
+
+    public double processExit(String ticketId) {
+        Ticket ticket = activeTickets.remove(ticketId);
+        ticket.markExit();
+        return ticket.calculateFee();
+    }
+}
+
+>> for add ev feature to a spot, can use decorator pattern
+
+>>
+My Two Cents.
+
+Awesome tutorial, goes without saying Udit's LLD playlist is really good.
+In an actual (80mins) interview, coming up with the above solution is really difficult.
+
+This is how I approached it.
+1. First without seeing the video, try to code it yourself (90 mins).
+2. Focus on the main parts first - create parking lot, park, unpark first. (if time permits, focus on other features).
+3. Try to do draw a small uml diagram, list the entities and the relationship.
+4. now try to build the logic for the above 3 features.
+5. In case you have multiple vehicles - car, bike, truck (use Factory design pattern easy to implement).
+6. for parking lot creation use singleton as well.
+** it's good if you can get till here **
+7. Use Treeset for making sure the ordering works. (do check its complexity though).
+8. Finally bonus, see if you can handle threading here.
+
+In all of my interviews, till 6 have given me a hire rating.
+
+

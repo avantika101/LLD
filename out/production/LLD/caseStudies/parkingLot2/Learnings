@@ -1,0 +1,46 @@
+Strategy injection using constructor
+
+ParkingLot ----------> floor creation strategy & required params in constructor
+- ParkingFloors --------> floor creation strategy, spot creation strategy in the constructor
+  - ParkingSpots -----------> spot Creation strategy
+
+for each of these classes, can we change the creation strategies dynamically?
+Need extra class - manager, very difficult
+
+create a service and provide all objects, strategies to it
+
+keep referencing it from other newly added features if required
+eg, gates, customer info portal etc
+
+> we already contain spots like compact, small etc
+we need to add another spot called electric which contains charge and pay feature
+what are different ways to do it?
+
+1. electricSpot extends ParkingSpot{ add extra stuff }
+ParkingSpot spot = new ElectricSpot() ---> code issue, will not work
+
+2. Decorator ---> works, will require typecasting, is complex
+and each spot doesn't need to be enhanced
+
+3. add charge&pay method to interface and make other classes also implement it
+violates, single responsibility, interface seggregation etc
+
+4. Interface ---> works, will require typecasting, simple,
+will explode if combinations like handicapped+electric etc are required.
+according to current scenario, only electric cars will need electric spots so using interface
+else will have to use decorator
+
+Pending ---
+
+>Customers can pay the tickets at the automated exit panel or to the parking attendant.
+>The system should not allow more vehicles than the maximum capacity of the parking lot.
+If the parking is full, the system should be able to show a message at the entrance panel
+and on the parking display board on the ground floor.
+>The system should support parking for different types of vehicles like car,
+truck, van, motorcycle, etc.
+>Each parking floor should have a display board showing any free parking spot for each spot type.
+>The system should support a per-hour parking fee model.
+For example, customers have to pay $4 for the first hour, $3.5 for the
+second and third hours, and $2.5 for all the remaining hours.
+
+Demo
