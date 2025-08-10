@@ -1,0 +1,47 @@
+The system will support the renting of different automobiles like cars,
+trucks, SUVs, vans, and motorcycles.
+Each vehicle should be added with a unique barcode and other details,
+including a parking stall number which helps to locate the vehicle.
+The system should be able to retrieve information like which member took a
+particular vehicle or what vehicles have been rented out by a specific member.
+The system should collect a late-fee for vehicles returned after the due date.
+Members should be able to search the vehicle inventory and reserve any available vehicle
+The system should be able to send notifications whenever the reservation is approaching the pick-up date,
+as well as when the vehicle is nearing the due date or has not been returned within the due date.
+Members can add rental insurance to their reservation.
+Members can rent additional equipment, like navigation, child seat, ski rack, etc.
+Members can add additional services to their reservation, such as roadside assistance, additional driver, wifi, etc.
+-- (interface, concrete impl & list in booking)
+-- since we're dealing with objects, we should use deep copy or shallow copy?
+
+problems -
+getAvailableVehicleStrategy - ??
+scheduled notifications - done
+logging - done
+calculate fee after amenities, services etc are added. - ??
+Will have to update Booking class to add these
+is that feasible? any pattern that we can use? --- assume shallow
+
+ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+
+        // Run scheduler every hour
+        executor.scheduleAtFixedRate(() -> {
+            try {
+                scheduler.run();
+            } catch (Exception e) {
+                System.err.println("Error while running scheduler: " + e.getMessage());
+            }
+        }, 0, 1, TimeUnit.HOURS);
+
+> in notification service, should we send only booking or send user separately?
+maybe separately because in booking we can just have userid.
+can return details of this user using userService
+
+> //one & many configuration? in one insurance, many insurance?
+
+> make constructors public
+
+> services like inventory etc can be pulled outside of the CarRentalService.
+While initializing CarRentalService, we can give those in the constructor of CarRentalService.
+
+Q>> where to instantiate small services like vehicle inventory, payments etc?

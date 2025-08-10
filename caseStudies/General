@@ -1,0 +1,20 @@
+1. mode & command executors
+2. assume that user gives correct input. for eg, give valid ticket number when
+leaving or correct slot number.
+3. strategy - plug and play, can be plugged in other applications also.
+4. exceptions
+5. services
+
+> assume shallow copy (insurance & other amenities)
+
+Q>> where to instantiate small services like vehicle inventory, payments, logservice etc?
+- better to instantiate them in main method and pass them as dependencies to CarRentalService
+
+> For creating exceptions, there are two ways.
+1. create enums with custom values
+2. create specific exceptions by extending RuntimeException and pass those enums here.
+3. throw runtime exections only and pass enum exceptions there.
+- 3 might be faulty because we will have to go and change the enum everywhere manually?
+- 2 is better because > Future-proofing
+If later you add more information to the exception (like vehicleId, availableDate), you can add fields and methods in your custom exception.
+With RuntimeException + message only, you’re stuck parsing strings.
